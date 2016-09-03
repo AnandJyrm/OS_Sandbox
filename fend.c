@@ -19,5 +19,5 @@
 #include "fend.h"
 int main() {
 	printf(Str);
-	return 0;
+	return 1;
 }

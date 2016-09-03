@@ -4,16 +4,18 @@
 CC=gcc
 CFLAGS=-Wall -Wextra -pedantic
 
-all:
+all:    
 	$(CC) $(CFLAGS) fend.c fend.h -o fend
 
-clean:
-	rm -rf *.o *.exe *.exe.stackdump
+debug:
+	$(CC) $(CFLAGS) -DLOGPRINT fend.c fend.h -o dfend
 
-save:
+clean:  
+	rm -rf *.o *.exe *.exe.stackdump fend dfend
+
+save:   
 	git add fend.c fend.h Makefile
 	git commit -m "$m"
 	
-#sync changes to repository
-sync:
+sync:	
 	git push

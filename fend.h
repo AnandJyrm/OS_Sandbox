@@ -10,9 +10,10 @@
 #include <signal.h>
 #include <string.h>
 #include <errno.h>
+#include <fcntl.h>
 #include <sys/time.h>
 #include <sys/types.h>
-#include <fcntl.h>
+
 
 #ifdef LOGPRINT
 #define log(message) printf("LOG:>>\t\t%s\n",message)
@@ -20,18 +21,21 @@
 #define log(message) {do{}while(0);}
 #endif
 
-char Str[] = "Hello World";
+struct accessGlob{
+	int glob;
+	char * filename;
+};
 
 int parse(char * config) {
-        int configFile;
-        char *string = (char *)malloc(sizeof(char) * 128);
-        if( access( config, F_OK ) != -1 ) {
-                configFile = open(config, O_RDONLY);
-                fgets(&string, 5, configFile);
-                printf("config file says %s%d", string,len);
-                close(configFile);
-        } else {
-                return -1;
-        }
-        return 0;
+	FILE * configFP;
+	char string[100];
+	if( access( config, R_OK ) != -1 ) {
+		configFP = fopen(config, "r");
+		fread(string, 5, 20, configFP);
+		printf("Config file says %s\n", string);
+		fclose(configFP	);
+	} else {
+		return -1;
+	}
+	return 0;
 }

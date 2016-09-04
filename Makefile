@@ -16,6 +16,6 @@ clean:
 save:   
 	git add fend.c fend.h Makefile
 	git commit -m "$m"
-	
-sync:	
+
+sync:
 	git push

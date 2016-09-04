@@ -23,17 +23,33 @@
 
 struct accessGlob{
 	int glob;
-	char * filename;
+	char fileName[];
 };
 
-int parse(char * config) {
+typedef struct accessGlob Glob;
+/*
+ * Function to parse the config file and create an array of accessGlob
+ */
+int parse(char * config, Glob * accessList) {
 	FILE * configFP;
-	char string[100];
+	//char string[100];
 	if( access( config, R_OK ) != -1 ) {
 		configFP = fopen(config, "r");
-		fread(string, 5, 20, configFP);
-		printf("Config file says %s\n", string);
-		fclose(configFP	);
+
+		/*
+		 * Convert the contents of configFP into array of struct accessGlob
+		 * using fscanf
+		 */
+		// int i = 0;
+		//while(1){
+			log("here");
+			if(fscanf(configFP, "%d %s", &(accessList->glob), &(accessList->fileName)) > 0) //{
+				printf("\n%d %s\n",accessList->glob, accessList->fileName);
+		//		i++;
+		//	} else 
+		//		break;
+		//}
+		fclose(configFP);
 	} else {
 		return -1;
 	}
